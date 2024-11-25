@@ -28,11 +28,17 @@ class _ExpensesPageState extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: Text('Expense Tracker'), actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          )
+        ]),
         body: Column(
-      children: [
-        const Text("Expense chart"),
-        Expanded(child: ExpensesList(expenses: _registeredExpenses)),
-      ],
-    ));
+          children: [
+            const Text("Expense chart"),
+            Expanded(child: ExpensesList(expenses: _registeredExpenses)),
+          ],
+        ));
   }
 }
