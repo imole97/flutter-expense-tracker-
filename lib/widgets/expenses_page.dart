@@ -25,10 +25,18 @@ class _ExpensesPageState extends State<ExpensesPage> {
         category: Category.leisure),
   ];
 
+  void _openAddExpenseOverlay() {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Text("Modal bottome sheet");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Expense Tracker'), actions: [
+        appBar: AppBar(title: const Text('Expense Tracker'), actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.add),
