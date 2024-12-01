@@ -27,10 +27,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
   ];
 
   void _openAddExpenseOverlay() {
+    print("open");
     showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return NewExpense();
+          return const NewExpense();
         });
   }
 
