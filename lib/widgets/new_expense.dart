@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
-
+  const NewExpense({super.key, required this.onAddExpense});
+  final Function onAddExpense;
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
@@ -16,7 +16,7 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime? _selectedDate;
+  DateTime _selectedDate = DateTime.now();
   Category _selectedCategory = Category.leisure;
 
   void _showDatePicker() async {
@@ -28,7 +28,7 @@ class _NewExpenseState extends State<NewExpense> {
         firstDate: firstDate,
         lastDate: now);
     setState(() {
-      _selectedDate = pickedDate;
+      _selectedDate = pickedDate!;
     });
   }
 
@@ -36,6 +36,7 @@ class _NewExpenseState extends State<NewExpense> {
     final enteredAmount = double.tryParse(_amountController
         .text); //converts a string to a double. it will be null if we try to parse a string
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
         _selectedDate == null) {
@@ -56,6 +57,15 @@ class _NewExpenseState extends State<NewExpense> {
         ),
       );
       return;
+    } else {
+      widget.onAddExpense(
+        Expense(
+            title: _titleController.text,
+            category: _selectedCategory,
+            amount: enteredAmount,
+            date: _selectedDate!),
+      );
+      Navigator.pop(context);
     }
   }
 
