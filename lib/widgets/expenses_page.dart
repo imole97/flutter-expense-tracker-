@@ -29,7 +29,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
   void _openAddExpenseOverlay() {
     print("open");
     showModalBottomSheet(
-      isScrollControlled: true, //makes the modal take the full available height
+        isScrollControlled:
+            true, //makes the modal take the full available height
         context: context,
         builder: (ctx) {
           return NewExpense(
@@ -42,6 +43,12 @@ class _ExpensesPageState extends State<ExpensesPage> {
     print(expense);
     setState(() {
       _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
     });
   }
 
@@ -58,7 +65,10 @@ class _ExpensesPageState extends State<ExpensesPage> {
           children: [
             const Text("Expense chart"),
             Expanded(
-              child: ExpensesList(expenses: _registeredExpenses),
+              child: ExpensesList(
+                expenses: _registeredExpenses,
+                onRemoveExpense: _removeExpense,
+              ),
             ),
           ],
         ));

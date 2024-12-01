@@ -6,7 +6,7 @@ final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key, required this.onAddExpense});
-  final Function onAddExpense;
+  final Function(Expense expense) onAddExpense;
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
