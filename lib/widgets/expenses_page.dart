@@ -32,6 +32,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
     showModalBottomSheet(
         isScrollControlled:
             true, //makes the modal take the full available height
+        useSafeArea:
+            true, //prevents interruption with device features like camera
         context: context,
         builder: (ctx) {
           return NewExpense(
@@ -70,6 +72,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text("Start adding some expenses!"),
     );
@@ -80,17 +84,25 @@ class _ExpensesPageState extends State<ExpensesPage> {
       );
     }
     return Scaffold(
-        appBar: AppBar(title: const Text('Expense Tracker'), actions: [
-          IconButton(
-            onPressed: _openAddExpenseOverlay,
-            icon: const Icon(Icons.add),
-          )
-        ]),
-        body: Column(
-          children: [
-            Chart(expenses: _registeredExpenses),
-            Expanded(child: mainContent),
-          ],
-        ));
+      appBar: AppBar(title: const Text('Expense Tracker'), actions: [
+        IconButton(
+          onPressed: _openAddExpenseOverlay,
+          icon: const Icon(Icons.add),
+        )
+      ]),
+      body: width < 600
+          ? Column(
+              children: [
+                Chart(expenses: _registeredExpenses),
+                Expanded(child: mainContent),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
+                Expanded(child: mainContent),
+              ],
+            ),
+    );
   }
 }
